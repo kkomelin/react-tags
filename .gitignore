@@ -3,5 +3,5 @@ npm-debug.log
 .idea
 .vscode
 coverage
-dist-modules
+# dist-modules
 # dist
