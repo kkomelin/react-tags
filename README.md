@@ -1,5 +1,13 @@
 # React tags
 
+## Fork
+
+1) `react-tag-input` uses `react-dnd` for drag&drop support and we don't need the drag&drop feature.
+2) `react-tag-input` doesn't support React 18 and we need React 18.
+3) To top it all off, `react-tag-input` seems to be not supported.
+
+
+
 [![MIT](https://img.shields.io/npm/l/react-tag-input.svg?style=flat-square)](https://github.com/react-tags/react-tags/blob/master/LICENSE)
 [![NPM Version](https://img.shields.io/npm/v/react-tag-input.svg?style=flat-square)](https://www.npmjs.com/package/react-tag-input)
 [![npm downloads](https://img.shields.io/npm/dm/react-tag-input.svg?style=flat-square)](https://www.npmjs.com/package/react-tag-input)
