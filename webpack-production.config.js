@@ -17,8 +17,6 @@ const config = {
   externals: {
     react: 'React',
     'react-dom': 'ReactDOM',
-    'react-dnd': 'ReactDnD',
-    'react-dnd-html5-backend': 'ReactDnDHTML5Backend',
   },
   plugins: [
     // Allows error warnings but does not stop compiling.

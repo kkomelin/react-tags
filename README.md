@@ -10,7 +10,6 @@ React-tags is a simple tagging component ready to drop in your projects. The com
 ## Features
 - Autocomplete based on a suggestion list
 - Keyboard friendly and mouse support
-- Reorder tags using drag and drop
 - Edit tag support
 - Optional clear all button
 
@@ -49,12 +48,10 @@ yarn add react-tag-input
 make sure you have installed the **peer dependencies** as well with below versions
 ```
 "react": "^17.0.2",
-"react-dnd": "^14.0.2",
-"react-dnd-html5-backend": "^14.0.0",
 "react-dom": "17.0.2"
 
 ```
-It is, however, also available to be used separately (`dist/ReactTags.min.js`). If you prefer this method remember to include [ReactDND](https://github.com/gaearon/react-dnd) as a dependancy. Refer to the [example](https://stackblitz.com/edit/react-tag-input) to see how this works.
+It is, however, also available to be used separately (`dist/ReactTags.min.js`). Refer to the [example](https://stackblitz.com/edit/react-tag-input) to see how this works.
 
 ## Usage
     
@@ -98,16 +95,6 @@ const App = () => {
     setTags([...tags, tag]);
   };
 
-  const handleDrag = (tag, currPos, newPos) => {
-    const newTags = tags.slice();
-
-    newTags.splice(currPos, 1);
-    newTags.splice(newPos, 0, tag);
-
-    // re-render
-    setTags(newTags);
-  };
-
   const handleTagClick = index => {
     console.log('The tag at index ' + index + ' was clicked');
   };
@@ -122,7 +109,6 @@ const App = () => {
           delimiters={delimiters}
           handleDelete={handleDelete}
           handleAddition={handleAddition}
-          handleDrag={handleDrag}
           handleTagClick={handleTagClick}
           inputFieldPosition="bottom"
           autocomplete
@@ -137,7 +123,6 @@ render(<App />, document.getElementById('root'));
 ```
 
 **A note about `Contexts`**
-One of the dependencies of this component is the [react-dnd](https://github.com/gaearon/react-dnd) library. Since the 1.0 version, the original author has changed the API and requires the application using any draggable components to have a top-level [backend](http://gaearon.github.io/react-dnd/docs-html5-backend.html) context. So if you're using this component in an existing Application that uses React-DND you will already have a backend defined, in which case, you should `require` the component *without* the context.
 
 ```javascript
 const ReactTags = require('react-tag-input').WithOutContext;
@@ -156,7 +141,6 @@ Option | Type | Default | Description
 |[`labelField`](#labelField) | `String` | `text` | Provide an alternative `label` property for the tags. Here is a [demo](https://www.jinno.io/app/6/labelField?source=react-tag-input)
 |[`handleAddition`](#handleAddition) | `Function` | `undefined` | Function called when the user wants to add a tag (required).
 |[`handleDelete`](#handleDelete) | `Function` | `undefined` | Function called when the user wants to delete a tag (required).
-|[`handleDrag`](#handleDrag) | `Function` | `undefined` | Function called when the user drags a tag.
 |[`handleFilterSuggestions`](#handleFilterSuggestions) | `Function` | `undefined` | Function called when filtering suggestions.
 |[`handleTagClick`](#handleTagClick) | `Function` | `undefined` | Function called when the user wants to know which tag was clicked.
 |[`autofocus`](#autofocus) | `Boolean` | `true` | Boolean value to control whether the text-input should be autofocused on mount. Here is a [demo](https://www.jinno.io/app/6/autofocus?source=react-tag-input).
@@ -167,14 +151,13 @@ Option | Type | Default | Description
 |[`minQueryLength`](#minQueryLength) | `Number` | `2` | How many characters are needed for suggestions to appear. Here is a [demo](https://www.jinno.io/app/6/minQueryLength?source=react-tag-input).
 |[`removeComponent`](#removeComponent) | `Function` |  | Function to render custom remove component for the tags.
 |[`autocomplete`](#autocomplete) | `Boolean`/`Number` | `false` | Ensure the first matching suggestion is automatically converted to a tag when a [delimiter](#delimiters) key is pressed. Here is a [demo](https://www.jinno.io/app/6/autocomplete?source=react-tag-input).
-|[`readOnly`](#readOnly) | `Boolean` | `false` | Read-only mode without the input box and `removeComponent` and drag-n-drop features disabled. Here is a [demo](https://www.jinno.io/app/6/readOnly?source=react-tag-input).
+|[`readOnly`](#readOnly) | `Boolean` | `false` | Read-only mode without the input box and `removeComponent`. Here is a [demo](https://www.jinno.io/app/6/readOnly?source=react-tag-input).
 |[`name`](#name) | `String` | `undefined` | The `name` attribute added to the input . Here is a [demo](https://www.jinno.io/app/6/name?source=react-tag-input).
 |[`id`](#id) | `String` | `undefined` | The `id` attribute added to the input . Here is a [demo](https://www.jinno.io/app/6/id?source=react-tag-input).
 |[`maxLength`](#maxLength) | `Number` | `Infinity` | The `maxLength` attribute added to the input. Here is a [demo](https://www.jinno.io/app/6/maxLength?source=react-tag-input).
 |[`inline`](#inline) | `Boolean` | `true` | Render input field and selected tags in-line. Here is a [demo](https://www.jinno.io/app/6/inline?source=react-tag-input).
 |[`inputFieldPosition`](#inputFieldPosition) | `String` | `inline` | Specify position of input field relative to tags
 |[`allowUnique`](#allowUnique) | `Boolean` | `true` | Boolean value to control whether tags should be unqiue. Here is a [demo](https://www.jinno.io/app/6/allowUnique?source=react-tag-input).
-|[`allowDragDrop`](#allowDragDrop) | `Boolean` | `true` | Implies whether tags should have drag-n-drop features enabled. Here is a [demo](https://www.jinno.io/app/6/allowDragDrop?source=react-tag-input).
 |[`renderSuggestion`](#renderSuggestion) | `Function` | `undefined` | Render prop for rendering your own suggestions.
 | [`inputProps`](#inputProps) | Object |`{}` | The extra attributes which are passed to the input field. 
 | [`allowAdditionFromPaste`](#allowAdditionFromPaste) | `boolean` | `true` | Implies whether to allow paste action when adding tags. Here is a [demo](https://www.jinno.io/app/6/allowAdditionFromPaste?source=react-tag-input).|
@@ -243,7 +226,6 @@ Provide an alternative `label` property for the tags.
     tags={tags}
     suggestions={}
     labelField={'name'}
-    handleDrag={}
  />
 ```
 
@@ -264,15 +246,6 @@ Function called when the user wants to delete a tag
 ```js
 function(i) {
     // delete the tag at index i
-}
-```
-### handleDrag
-If you want tags to be draggable, you need to provide this function.
-Function called when the user drags a tag.
-
-```js
-function(tag, currPos, newPos) {
-    // remove tag from currPos and add in newPos
 }
 ```
 
@@ -409,7 +382,7 @@ This option has no effect if there are no [`suggestions`](#suggestionsOption).
 Here is a [demo](https://www.jinno.io/app/6/autocomplete?source=react-tag-input).
 
 ### readOnly
-Renders the component in read-only mode without the input box and `removeComponent`. This also disables the drag-n-drop feature.
+Renders the component in read-only mode without the input box and `removeComponent`.
 
 Here is a [demo](https://www.jinno.io/app/6/readOnly?source=react-tag-input).
 
@@ -498,11 +471,6 @@ Here is a [demo](https://www.jinno.io/app/6/inputFieldPosition?source=react-tag-
 ### allowUnique 
 This prop controls whether tags should be unique.
 Here is a [demo](https://www.jinno.io/app/6/allowUnique?source=react-tag-input).
-
-### allowDragDrop
-This prop controls whether tags should have the drag-n-drop feature enabled.
-
-Here is a [demo](https://www.jinno.io/app/6/allowDragDrop?source=react-tag-input).
 
 ### renderSuggestion
 This props allows to provide your own suggestion renderer and override the default one. It receives the suggestion and the query string as parameters. For example:
@@ -613,7 +581,7 @@ Got ideas on how to make this better? Open an issue!
 
 
 ## Thanks
-The autocomplete dropdown is inspired by Lea Verou's [awesomeplete](https://github.com/LeaVerou/awesomplete) library. The Drag and drop functionality is provided by Dan Abramov's insanely useful [ReactDND](https://github.com/gaearon/react-dnd) library.
+The autocomplete dropdown is inspired by Lea Verou's [awesomeplete](https://github.com/LeaVerou/awesomplete) library.
 
 Also thanks to the awesome contributors who've made the library far better!
 

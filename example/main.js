@@ -250,16 +250,6 @@ const App = () => {
     setTags([...tags, tag]);
   };
 
-  const handleDrag = (tag, currPos, newPos) => {
-    const newTags = tags.slice();
-
-    newTags.splice(currPos, 1);
-    newTags.splice(newPos, 0, tag);
-
-    // re-render
-    setTags(newTags);
-  };
-
   const handleTagClick = (index) => {
     console.log('The tag at index ' + index + ' was clicked');
   };
@@ -278,7 +268,6 @@ const App = () => {
           delimiters={delimiters}
           handleDelete={handleDelete}
           handleAddition={handleAddition}
-          handleDrag={handleDrag}
           handleTagClick={handleTagClick}
           onTagUpdate={onTagUpdate}
           inputFieldPosition="bottom"

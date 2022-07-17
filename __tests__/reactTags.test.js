@@ -15,10 +15,8 @@ import { fireEvent, render } from '@testing-library/react';
 
 let defaults;
 const sandbox = createSandbox();
-let handleDragStub;
 
 beforeAll(() => {
-  handleDragStub = sandbox.stub();
   defaults = {
     tags: [{ id: 'Apple', text: 'Apple' }],
     suggestions: [
@@ -28,7 +26,6 @@ beforeAll(() => {
       { id: 'Pear', text: 'Pear' },
       { id: 'Peach', text: 'Peach' },
     ],
-    handleDrag: handleDragStub,
   };
 });
 
@@ -786,78 +783,6 @@ describe('Test ReactTags', () => {
       })
     );
     expect($el.find('[data-automation="input"]').props().disabled).to.be.true;
-  });
-
-  describe('Test drag and drop', () => {
-    test('should be draggable', () => {
-      const root = render(
-        mockItem({
-          tags: [
-            ...defaults.tags,
-            { id: 'Litchi', text: 'Litchi' },
-            { id: 'Mango', text: 'Mango' },
-          ],
-        })
-      );
-      const src = root.getByText('Apple');
-      const dest = root.getByText('Mango');
-      fireEvent.dragStart(src);
-      const styles = getComputedStyle(src);
-      expect(styles.cursor).to.equal('move');
-      fireEvent.dragEnter(dest);
-      fireEvent.drop(dest);
-      fireEvent.dragLeave(dest);
-      fireEvent.dragEnd(dest);
-
-      const dragTag = defaults.tags[0];
-      const dragIndex = 0;
-      const hoverIndex = 2;
-      expect(handleDragStub.calledWithExactly(dragTag, dragIndex, hoverIndex))
-        .to.be.true;
-    });
-
-    test('should not be draggable when drag and drop index is same', () => {
-      const root = render(mockItem());
-      const src = root.getByText('Apple');
-      fireEvent.dragStart(src);
-      fireEvent.dragEnter(src);
-      fireEvent.drop(src);
-      fireEvent.dragLeave(src);
-      fireEvent.dragEnd(src);
-
-      expect(handleDragStub.called).to.be.false;
-    });
-
-    [
-      { overrideProps: { readOnly: true }, title: 'readOnly is true' },
-      {
-        overrideProps: { allowDragDrop: false },
-        title: 'allowDragDrop is false',
-      },
-    ].forEach((data) => {
-      const { title, overrideProps } = data;
-      test(`should not be draggable when ${title}`, () => {
-        const root = render(
-          mockItem({
-            ...overrideProps,
-            tags: [
-              ...defaults.tags,
-              { id: 'Litchi', text: 'Litchi' },
-              { id: 'Mango', text: 'Mango' },
-            ],
-          })
-        );
-        const src = root.getByText('Apple');
-        const dest = root.getByText('Mango');
-        fireEvent.dragStart(src);
-        fireEvent.dragEnter(dest);
-        fireEvent.dragLeave(dest);
-        fireEvent.dragEnd(dest);
-        expect(handleDragStub.called).to.be.false;
-        const styles = getComputedStyle(src);
-        expect(styles.cursor).to.equal('auto');
-      });
-    });
   });
 
   describe('When editable', () => {

@@ -23,7 +23,6 @@ const config = {
   externals: {
     react: 'React',
     'react-dom': 'ReactDOM',
-    'react-dnd': 'ReactDnD',
   },
   plugins: [
     // Enables Hot Modules Replacement

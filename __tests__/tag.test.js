@@ -1,14 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { expect } from 'chai';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import { mount } from 'enzyme';
-import sinon from 'sinon';
 import noop from 'lodash/noop';
-import Tag from '../src/components/Tag';
+import sinon from 'sinon';
 import RemoveComponent from '../src/components/RemoveComponent';
+import Tag from '../src/components/Tag';
 
 function mockItem(overrides) {
   const props = Object.assign(
@@ -17,8 +15,6 @@ function mockItem(overrides) {
       tag: { id: '1', text: 'FooBar', className: 'action' },
       onDelete: noop,
       readOnly: false,
-      allowDragDrop: true,
-      moveTag: noop,
       classNames: {
         tag: 'tag',
         remove: 'remove',
@@ -28,9 +24,7 @@ function mockItem(overrides) {
     overrides
   );
   return (
-    <DndProvider backend={HTML5Backend}>
-      <Tag {...props} />
-    </DndProvider>
+    <Tag {...props} />
   );
 }
 

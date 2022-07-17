@@ -1,6 +1,4 @@
 import React, { Component, createRef } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import isEqual from 'lodash/isEqual';
 import noop from 'lodash/noop';
 import uniq from 'lodash/uniq';
@@ -41,12 +39,10 @@ class ReactTags extends Component {
     handleDelete: PropTypes.func,
     handleAddition: PropTypes.func,
     onTagUpdate: PropTypes.func,
-    handleDrag: PropTypes.func,
     handleFilterSuggestions: PropTypes.func,
     handleTagClick: PropTypes.func,
     allowDeleteFromEmptyInput: PropTypes.bool,
     allowAdditionFromPaste: PropTypes.bool,
-    allowDragDrop: PropTypes.bool,
     handleInputChange: PropTypes.func,
     handleInputFocus: PropTypes.func,
     handleInputBlur: PropTypes.func,
@@ -89,7 +85,6 @@ class ReactTags extends Component {
     autocomplete: false,
     readOnly: false,
     allowUnique: true,
-    allowDragDrop: true,
     tags: [],
     inputProps: {},
     onTagUpdate: noop,
@@ -124,7 +119,6 @@ class ReactTags extends Component {
     this.handleBlur = this.handleBlur.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.moveTag = this.moveTag.bind(this);
     this.handlePaste = this.handlePaste.bind(this);
     this.handleSuggestionHover = this.handleSuggestionHover.bind(this);
     this.handleSuggestionClick = this.handleSuggestionClick.bind(this);
@@ -417,24 +411,13 @@ class ReactTags extends Component {
     });
   }
 
-  moveTag(dragIndex, hoverIndex) {
-    const tags = this.props.tags;
-
-    // locate tags
-    const dragTag = tags[dragIndex];
-
-    // call handler with the index of the dragged tag
-    // and the tag that is hovered
-    this.props.handleDrag(dragTag, dragIndex, hoverIndex);
-  }
-
   getTagItems = () => {
-    const { tags, labelField, removeComponent, readOnly, allowDragDrop } =
+    const { tags, labelField, removeComponent, readOnly } =
       this.props;
     const classNames = { ...DEFAULT_CLASSNAMES, ...this.props.classNames };
 
     const { currentEditIndex, query } = this.state;
-    const moveTag = allowDragDrop ? this.moveTag : null;
+
     return tags.map((tag, index) => {
       return (
         <React.Fragment key={index}>
@@ -460,12 +443,10 @@ class ReactTags extends Component {
               tag={tag}
               labelField={labelField}
               onDelete={this.handleDelete.bind(this, index)}
-              moveTag={moveTag}
               removeComponent={removeComponent}
               onTagClicked={this.handleTagClick.bind(this, index, tag)}
               readOnly={readOnly}
               classNames={classNames}
-              allowDragDrop={allowDragDrop}
             />
           )}
         </React.Fragment>
@@ -573,9 +554,7 @@ class ReactTags extends Component {
 }
 
 const WithContext = ({ ...props }) => (
-  <DndProvider backend={HTML5Backend}>
-    <ReactTags {...props} />
-  </DndProvider>
+  <ReactTags {...props} />
 );
 export { WithContext };
 export { ReactTags as WithOutContext };

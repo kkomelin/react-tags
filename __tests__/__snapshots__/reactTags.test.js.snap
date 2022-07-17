@@ -15,8 +15,7 @@ exports[`Test ReactTags When ClearAll is true should render a clear all button 1
     >
       <span
         class="tag-wrapper ReactTags__tag"
-        draggable="true"
-        style="opacity: 1; cursor: move;"
+        style="opacity: 1; cursor: auto;"
       >
         Apple
         <button
@@ -65,8 +64,7 @@ exports[`Test ReactTags When editable should update the tag to input and focus t
     >
       <span
         class="tag-wrapper ReactTags__tag"
-        draggable="true"
-        style="opacity: 1; cursor: move;"
+        style="opacity: 1; cursor: auto;"
       >
         Apple
         <button
@@ -88,8 +86,7 @@ exports[`Test ReactTags When editable should update the tag to input and focus t
       </div>
       <span
         class="tag-wrapper ReactTags__tag"
-        draggable="true"
-        style="opacity: 1; cursor: move;"
+        style="opacity: 1; cursor: auto;"
       >
         Mango
         <button
@@ -122,7 +119,6 @@ exports[`Test ReactTags should render with expected props 1`] = `
 Object {
   "allowAdditionFromPaste": true,
   "allowDeleteFromEmptyInput": true,
-  "allowDragDrop": true,
   "allowUnique": true,
   "autocomplete": false,
   "autofocus": true,
@@ -136,7 +132,6 @@ Object {
   "handleAddition": [Function],
   "handleClearAll": [Function],
   "handleDelete": [Function],
-  "handleDrag": [Function],
   "inline": true,
   "inputFieldPosition": "inline",
   "inputProps": Object {},
